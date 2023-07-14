@@ -18,8 +18,11 @@ ipconfig /flushdns
 ipconfig /registerdns
 ECHO Settings have been updated.
 ECHO ============================
-ECHO Checking internet connection (Google DNS).
-ping 8.8.8.8
+ECHO Checking Gateway.
+for /f "tokens=2 delims=:" %%g in ('ipconfig ^| findstr /c:"Default Gateway"') do ping %%g
+ECHO ============================
+ECHO Checking DNS. (Internet Connection)
+for /f "tokens=2 delims=:" %%g in ('ipconfig /all ^| findstr /c:"DNS Server"') do ping %%g
 ECHO ============================
 ECHO Checking C drive.
 chkntfs c:

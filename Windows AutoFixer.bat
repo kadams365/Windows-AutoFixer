@@ -8,6 +8,12 @@ ECHO ============================
 ECHO Checking for Windows updates.
 UsoClient StartScan
 ECHO ============================
+ECHO Checking C drive.
+chkntfs c:
+ECHO ============================
+ECHO Checking RAM.
+wmic memorychip get devicelocator, capacity, speed
+ECHO ============================
 ECHO Refreshing network settings.
 ipconfig /release
 ipconfig /renew
@@ -24,9 +30,6 @@ ECHO ============================
 ECHO Checking DNS. (Internet Connection)
 for /f "tokens=2 delims=:" %%g in ('ipconfig /all ^| findstr /c:"DNS Server"') do ping %%g
 ECHO ============================
-ECHO Checking C drive.
-chkntfs c:
-ECHO ============================
 ECHO Network info.
 ipconfig /all
 ECHO ============================
@@ -34,6 +37,9 @@ ECHO Device IP(s).
 ipconfig | findstr IPv4
 ipconfig | findstr IPv6
 ECHO ============================
-ECHO Press 'Enter to restart computer...
+ECHO Attempting Winget upgrades.
+winget upgrade --all
+ECHO ============================
+ECHO Press any key to restart computer...
 pause
 UsoClient RestartDevice
